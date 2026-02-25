@@ -20,6 +20,10 @@ func XOREncrypt(text, key string) (string, error) {
 }
 
 func XORDecrypt(encoded, key string) (string, error) {
+	if len(key) == 0 {
+		return "", fmt.Errorf("key cannot be empty")
+	}
+
 	data, err := base64.StdEncoding.DecodeString(encoded)
 	if err != nil {
 		return "", err

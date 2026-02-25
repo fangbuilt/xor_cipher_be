@@ -22,6 +22,7 @@ func main() {
 
 	r.POST("/encrypt", handlers.CreateCipherHandler(services.XOREncrypt))
 	r.POST("/decrypt", handlers.CreateCipherHandler(services.XORDecrypt))
+	r.GET("/generateKey", handlers.GenerateKeyHandler(services.GenerateKey))
 	r.GET("/", healthCheck)
 
 	r.Run(":8080")
