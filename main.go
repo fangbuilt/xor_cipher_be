@@ -21,6 +21,7 @@ func main() {
 	r.Use(middlewares.CorsMiddleware())
 
 	r.POST("/cipher", handlers.CreateCipherHandler(services.XORCipher))
+	r.POST("/decipher", handlers.CreateCipherHandler(services.XORDecipher))
 	r.GET("/generateKey", handlers.GenerateKeyHandler(services.GenerateKey))
 	r.GET("/", healthCheck)
 

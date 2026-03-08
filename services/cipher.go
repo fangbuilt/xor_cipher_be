@@ -12,17 +12,37 @@ func XORCipher(text, key string) (string, error) {
 		return "", fmt.Errorf("key cannot be empty")
 	}
 
-	data, err := base64.StdEncoding.DecodeString(text)
+	textBytes := []byte(text)
+	keyBytes := []byte(key)
+
+	resultBytes := make([]byte, len(textBytes))
+
+	for i := range textBytes {
+		resultBytes[i] = textBytes[i] ^ keyBytes[i%len(keyBytes)]
+	}
+
+	result := base64.StdEncoding.EncodeToString(resultBytes)
+
+	return result, nil
+}
+
+func XORDecipher(cipheredText, key string) (string, error) {
+	if len(key) == 0 {
+		return "", fmt.Errorf("key cannot be empty")
+	}
+
+	decodedText, err := base64.StdEncoding.DecodeString(cipheredText)
 	if err != nil {
-		data = []byte(text)
+		return "", fmt.Errorf("invalid base64 input: %w", err)
 	}
 
 	keyBytes := []byte(key)
-	result := make([]byte, len(data))
 
-	for i := range data {
-		result[i] = data[i] ^ keyBytes[i%len(keyBytes)]
+	resultBytes := make([]byte, len(decodedText))
+
+	for i := range decodedText {
+		resultBytes[i] = decodedText[i] ^ keyBytes[i%len(keyBytes)]
 	}
 
-	return base64.StdEncoding.EncodeToString(result), nil
+	return string(resultBytes), nil
 }
