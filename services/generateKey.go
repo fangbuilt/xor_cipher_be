@@ -2,20 +2,18 @@ package services
 
 import (
 	"math/rand"
-	"time"
 )
 
 type GenerateKeyFunc func() string
 
 func GenerateKey() string {
-	rand.Seed(time.Now().UnixNano())
+	charset := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-	charset := "abcdefghijklmnopqrstuvwxyz"
+	shuffle := []rune(charset)
 
-	shuff := []rune(charset)
-	rand.Shuffle(len(shuff), func(i, j int) {
-		shuff[i], shuff[j] = shuff[j], shuff[i]
+	rand.Shuffle(len(shuffle), func(i, j int) {
+		shuffle[i], shuffle[j] = shuffle[j], shuffle[i]
 	})
 
-	return string(shuff)
+	return string(shuffle)
 }
