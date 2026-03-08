@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/base64"
 	"fmt"
 )
 
@@ -20,5 +21,5 @@ func XORCipher(text, key string) (string, error) {
 		resultBytes[i] = textBytes[i] ^ keyBytes[i%len(keyBytes)]
 	}
 
-	return string(resultBytes), nil
+	return base64.StdEncoding.EncodeToString(resultBytes), nil
 }
